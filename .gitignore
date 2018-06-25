@@ -21,6 +21,7 @@
 lib/bs
 *.mlast
 *.mliast
+*.bs.js
 .vscode
 .merlin
 .bsb.lock

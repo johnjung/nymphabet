@@ -1,13 +1,41 @@
+@keyframes spin_letters {
+  0% {
+    transform: rotate(calc(360deg * 0));
+  }
+  100% {
+    transform: rotate(calc(360deg * 1));
+  }
+}
+
 body {
   font-family: 'Lato', sans-serif;
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 20px;
+  font-weight: 900;
 }
-.letter {
+html {
+}
+#letters {
   left: 50%;
   position: absolute;
   top: 50%;
+  animation-name: spin_letters;
+  animation-duration: 1s;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
+.letter {
+  height: 20px;
+  left: 50%;
+  margin-left: -15px;
+  margin-top: -10px;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  width: 30px;
+}
+/*
 #letter_a { transform:                                translate(0px, -100px); }
 #letter_b { transform: rotate(calc(360deg / 26 *  1)) translate(0px, -100px) rotate(calc(360deg / 26 *  -1)); }
 #letter_c { transform: rotate(calc(360deg / 26 *  2)) translate(0px, -100px) rotate(calc(360deg / 26 *  -2)); }
@@ -34,4 +62,43 @@ body {
 #letter_x { transform: rotate(calc(360deg / 26 * 23)) translate(0px, -100px) rotate(calc(360deg / 26 * -23)); }
 #letter_y { transform: rotate(calc(360deg / 26 * 24)) translate(0px, -100px) rotate(calc(360deg / 26 * -24)); }
 #letter_z { transform: rotate(calc(360deg / 26 * 25)) translate(0px, -100px) rotate(calc(360deg / 26 * -25)); }
+*/
 
+#letter_a { transform:                                translate(0px, -200px); }
+#letter_b { transform: rotate(calc(360deg / 26 *  1)) translate(0px, -200px); }
+#letter_c { transform: rotate(calc(360deg / 26 *  2)) translate(0px, -200px); }
+#letter_d { transform: rotate(calc(360deg / 26 *  3)) translate(0px, -200px); }
+#letter_e { transform: rotate(calc(360deg / 26 *  4)) translate(0px, -200px); }
+#letter_f { transform: rotate(calc(360deg / 26 *  5)) translate(0px, -200px); }
+#letter_g { transform: rotate(calc(360deg / 26 *  6)) translate(0px, -200px); }
+#letter_h { transform: rotate(calc(360deg / 26 *  7)) translate(0px, -200px); }
+#letter_i { transform: rotate(calc(360deg / 26 *  8)) translate(0px, -200px); }
+#letter_j { transform: rotate(calc(360deg / 26 *  9)) translate(0px, -200px); }
+#letter_k { transform: rotate(calc(360deg / 26 * 10)) translate(0px, -200px); }
+#letter_l { transform: rotate(calc(360deg / 26 * 11)) translate(0px, -200px); }
+#letter_m { transform: rotate(calc(360deg / 26 * 12)) translate(0px, -200px); }
+#letter_n { transform: rotate(calc(360deg / 26 * 13)) translate(0px, -200px); }
+#letter_o { transform: rotate(calc(360deg / 26 * 14)) translate(0px, -200px); }
+#letter_p { transform: rotate(calc(360deg / 26 * 15)) translate(0px, -200px); }
+#letter_q { transform: rotate(calc(360deg / 26 * 16)) translate(0px, -200px); }
+#letter_r { transform: rotate(calc(360deg / 26 * 17)) translate(0px, -200px); }
+#letter_s { transform: rotate(calc(360deg / 26 * 18)) translate(0px, -200px); }
+#letter_t { transform: rotate(calc(360deg / 26 * 19)) translate(0px, -200px); }
+#letter_u { transform: rotate(calc(360deg / 26 * 20)) translate(0px, -200px); }
+#letter_v { transform: rotate(calc(360deg / 26 * 21)) translate(0px, -200px); }
+#letter_w { transform: rotate(calc(360deg / 26 * 22)) translate(0px, -200px); }
+#letter_x { transform: rotate(calc(360deg / 26 * 23)) translate(0px, -200px); }
+#letter_y { transform: rotate(calc(360deg / 26 * 24)) translate(0px, -200px); }
+#letter_z { transform: rotate(calc(360deg / 26 * 25)) translate(0px, -200px); }
+
+#word {
+  font-size: 32px;
+  left: 0;
+  line-height: 32px;
+  margin-top: -16px;
+  position: absolute;
+  text-align: center;
+  text-transform: uppercase;
+  top: 50%;
+  width: 100%;
+}

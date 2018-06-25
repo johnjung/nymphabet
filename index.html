@@ -37,9 +37,83 @@
   <span class="letter" id="letter_z">Z</span>
 </div>
 
-<form id="word">
-  <input type="text">
-  <input type="submit">
-</form>
+<p id="word"></p>
 
-<p id="how_to_play"><a href="#">How to Play</a></p>
+<!--<p id="how_to_play"><a href="#">How to Play</a></p>-->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+/*
+ * Letter wheel.
+ */
+
+var dragging_letters = false;
+var mousedown_position = null;
+var angle = 0;
+var angle_delta = 0;
+
+$('#letters')
+  .mousedown(function(e) {
+    dragging_letters = true;
+    mousedown_position = {
+      left: e.pageX - ($(window).width() / 2),
+      top: e.pageY - ($(window).height() / 2)
+    };
+  });
+$(document).mousemove(function(e) {
+  if (dragging_letters) {
+    var mousemove_position = {
+      left: e.pageX - ($(window).width() / 2),
+      top: e.pageY - ($(window).height() / 2)
+    };
+    var angle_start = Math.atan2(
+      mousedown_position.top,
+      mousedown_position.left
+    ) * 180 / Math.PI;
+    var angle_stop = Math.atan2(
+      mousemove_position.top,
+      mousemove_position.left
+    ) * 180 / Math.PI;
+
+    angle_delta = angle_stop - angle_start;
+    while (angle_delta > 180) {
+      angle_delta = angle_delta - 360;
+    }
+    $('#letters').css(
+      'transform', 
+      'rotate(' + (angle + angle_delta) + 'deg)'
+    );
+  }
+});
+$(document).mouseup(function(e) {
+  dragging_letters = false;
+  angle = angle + angle_delta; 
+});
+
+/*
+ * Typing. 
+ */
+
+var word = '';
+
+$(document).focus();
+
+$(document).keydown(function(e) {
+  // enter
+  if (e.keyCode == 13) {
+    console.log('pressed enter.');
+  // backspace
+  } else if (e.keyCode == '8') {
+    if (word.length > 0) {
+      word = word.slice(0, -1);
+    }
+  // ASCII characters.
+  } else if ((65 <= e.keyCode && e.keyCode <= 90) || (97 <= e.keyCode && e.keyCode <= 122)) {
+    console.log(e.keyCode);
+    word = word + String.fromCharCode(e.keyCode);
+  }
+  $('#word').text(word);
+});
+
+</script>

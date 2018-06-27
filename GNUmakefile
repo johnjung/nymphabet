@@ -2,10 +2,13 @@
 # GNUmakefile
 # Keith Waclena <http://www.lib.uchicago.edu/keith/>
 
+BIN = $(HOME)/node_modules/.bin
+export PATH := $(BIN):$(PATH)
+
 all::
-	npm run build
+	env PATH=$(PATH) npm run build
 
 clean::
-	npm run clean
+	env PATH=$(PATH) npm run clean
 
 

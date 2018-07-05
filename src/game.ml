@@ -63,3 +63,65 @@ module State = struct
   let whom t = if t.turn mod 2 = 0 then fst t.players else snd t.players
   let name t = Player.name (whom t)
 end
+
+let norm str = Js.String.(normalize str |> toLowerCase)
+
+let score alphabet word =
+  let open Result in
+  let rec loop scores n = function
+  |    [], []               -> assert false
+  |    [], _                -> Ok (   [],     scores)
+  | a::bz, []               -> Ok (a::bz, (n::scores))
+  | a::bz, l::ls when l = a -> loop scores (succ n) (   bz, ls)
+  | a::bz, l::ls (* else *) -> loop scores       n  (a::bz, ls)
+  in
+  match alphabet, word with
+  | a :: bz, l :: ls when l = a -> loop [] 0 (alphabet, word) >>| (id &&& product)
+  |      [], _                  -> Error "empty alphabet"
+  |       _, _                  -> Error "word doesn't start with alphabet"
+
+module Dict = struct
+  exception Empty
+  module M = Map.Make (String)
+  type t = string list M.t
+  let empty = M.empty
+  let mem w t =
+    if w = ""
+    then false
+    else match M.find (Js.String.slice ~from:0 ~to_:1 w) t  with
+    | None    -> false
+    | Some ws -> List.mem w ws
+  let cardinal t = M.fold (fun _ ws n -> len ws + n) t 0
+  let add t w = match Js.String.(normalize w |> slice ~from:0 ~to_:1) with
+  | "" -> t
+  | s  -> M.adjoin cons [] s (Js.String.toLowerCase w) t
+
+  let tojson t =
+    let each k v acc =
+      let vs = List.map (fun v -> Js.Json.string v) v in
+      (k, vs)::acc
+    in
+    M.fold each t [] |> Js_dict.fromList
+
+  let random t =
+    match M.keys t |> choose 1 with
+    | []   -> None
+    | c::_ -> match flip M.find t c with
+    | []   -> None
+    | ws   -> choose 1 ws |> List.hd |> some
+
+  let search az c t =
+    let eachword best w = match best with
+    | None   -> Some w
+    | Some b ->
+        if score az w > score az b
+        then Some w
+        else if score az w = score az b
+        then choose ~n:2 1 [w;b] |> List.hd |> some
+        else best
+    in
+    match M.find c t with
+    | exception Not_found -> None
+    | ws                  -> foldl eachword None ws
+
+end
